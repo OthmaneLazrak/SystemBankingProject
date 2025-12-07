@@ -33,10 +33,12 @@ public class AccountServiceApplication {
                         .owner(customer.getName())
                         .customerId(customer.getId())
                         .balance(6000)
+                        .currency("MAD")
                         .build();
                 Account account2 = Account.builder()
                         .owner(customer.getName())
                         .customerId(customer.getId())
+                        .currency("EUR")
                         .balance(6000)
                         .build();
 

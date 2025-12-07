@@ -8,4 +8,5 @@ public class Account {
     private String owner;
     private Long customerId;
     private double balance;
+    private String currency;
 }
