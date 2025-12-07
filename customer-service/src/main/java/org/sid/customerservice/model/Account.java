@@ -1,0 +1,12 @@
+package org.sid.customerservice.model;
+
+import lombok.Data;
+
+@Data
+public class Account {
+    private Long id;
+    private String owner;
+    private Long customerId;
+    private double balance;
+
+}
