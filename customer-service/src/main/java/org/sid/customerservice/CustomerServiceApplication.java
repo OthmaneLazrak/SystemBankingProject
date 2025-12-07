@@ -9,7 +9,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.PagedModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -21,17 +24,35 @@ public class CustomerServiceApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(CustomerRepository customerRepository, AccountRestClient accountRestClient){
-        return args ->{
+    CommandLineRunner commandLineRunner(CustomerRepository customerRepository, AccountRestClient accountRestClient) {
+        return args -> {
 
             customerRepository.save(Customer.builder()
-                            .name("Othmane Lazrek")
-                            .email("othmane@gmail.com")
-                            .build());
+                    .name("Othmane Lazrek")
+                    .email("othmane@gmail.com")
+                    .build());
             customerRepository.save((Customer.builder()
                     .name("Taha Karrada")
                     .email("taha@gmail.com")
                     .build()));
+
+            // Récupération
+            List<Customer> customers = customerRepository.findAll();
+
+            // Pour chaque customer → récupérer les comptes via Feign
+            customers.forEach(customer -> {
+
+                CollectionModel<Account> model = accountRestClient.accountsByCustomer(customer.getId());
+
+                List<Account> accounts = new ArrayList<>(model.getContent());
+
+                customer.setAccounts(accounts);
+
+                System.out.println("\nCustomer : " + customer.getName());
+                accounts.forEach(a -> {
+                    System.out.println(" - Account ID: " + a.getId() + ", Balance: " + a.getBalance());
+                });
+            });
         };
     }
 
