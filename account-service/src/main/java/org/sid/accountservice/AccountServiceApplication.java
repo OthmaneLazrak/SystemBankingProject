@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
-import java.util.Collection;
+import java.util.List;
 
 @SpringBootApplication
 @EnableFeignClients
@@ -23,10 +23,10 @@ public class AccountServiceApplication {
     @Bean
     CommandLineRunner commandLineRunner(AccountRepository accountRepository, CustomerRestClient customerRestClient){
         return args -> {
-            // 1️⃣ Récupérer tous les customers depuis customer-service
-            Collection<Customer> customers = customerRestClient.allCustomers().getContent();
 
-            // 2️⃣ Pour chaque customer, créer un compte et lui associer le customer complet
+            // 1️⃣ Récupérer tous les customers
+            List<Customer> customers = customerRestClient.allCustomers();
+
             customers.forEach(customer -> {
 
                 Account account1 = Account.builder()
@@ -34,30 +34,16 @@ public class AccountServiceApplication {
                         .customerId(customer.getId())
                         .balance(6000)
                         .build();
-                Account account2 = Account.builder()
-                        .owner(customer.getName())
-                        .customerId(customer.getId())
-                        .balance(6000)
-                        .build();
-
-                // 3️⃣ Intégrer le customer dans l'objet Account
-                account1.setCustomer(customer);
-                account2.setCustomer(customer);
 
 
-                // 4️⃣ Sauvegarde dans la base
+
                 accountRepository.save(account1);
-                accountRepository.save(account2);
 
-
-                System.out.println("Account 1 created for " + account1.getOwner());
-                System.out.println("Customer info: " + account1.getCustomer());
-
-                System.out.println("Account 2 created for " + account2.getOwner());
-                System.out.println("Customer info: " + account2.getCustomer());
-
+                System.out.println("Accounts created for customer: " + customer.getName());
             });
         };
     }
 
 }
+
+
