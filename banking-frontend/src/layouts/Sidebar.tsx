@@ -6,6 +6,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
+import BarChartIcon from  "@mui/icons-material/BarChart";
 import { Link, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
@@ -16,6 +17,7 @@ const Sidebar = () => {
         { text: "Customers", icon: <PeopleIcon />, path: "/customers" },
         { text: "Accounts", icon: <AccountBalanceIcon />, path: "/accounts" },
         { text: "Transactions", icon: <SwapHorizIcon />, path: "/transactions" },
+        { text: "Exchange", icon: <BarChartIcon  />, path: "/exchange"},
     ];
 
     return (
