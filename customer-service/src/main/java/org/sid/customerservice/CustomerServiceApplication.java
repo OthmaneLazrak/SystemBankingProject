@@ -27,7 +27,12 @@ public class CustomerServiceApplication {
                     .build());
 
             customerRepository.save(Customer.builder()
-                    .name("Taha Karrada")
+                    .name("Nassim Lachkar")
+                    .email("taha@gmail.com")
+                    .build());
+
+            customerRepository.save(Customer.builder()
+                    .name("Omar Meftah")
                     .email("taha@gmail.com")
                     .build());
 

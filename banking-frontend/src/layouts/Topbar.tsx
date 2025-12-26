@@ -15,7 +15,7 @@ const Topbar = () => {
         >
             <Toolbar>
                 <Typography variant="h6" sx={{ flexGrow: 1, color: "#333" }}>
-                    Tableau de Bord
+                    
                 </Typography>
 
                 <IconButton>
